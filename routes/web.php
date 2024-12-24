@@ -10,7 +10,7 @@ Route::get('/', function () {
 });
 
 
-Route::group(['prefix'=> 'v1','namespace'=>'App\Http\Controllers\API\V1'], function () {
+Route::group(['prefix'=> 'api/v1','namespace'=>'App\Http\Controllers\API\V1'], function () {
     Route::apiResource('customers',CustomerController::class);
-    Route::apiResource('invoice',InvoiceController::class);
+    Route::apiResource('invoices',InvoiceController::class);
 });
