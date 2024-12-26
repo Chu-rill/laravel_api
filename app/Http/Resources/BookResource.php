@@ -20,6 +20,7 @@ class BookResource extends JsonResource
             "title"=> $this->title,
             "author"=>$this->author,
             "description"=> $this->description,
+            "borrowed"=>(bool)$this->borrowed,
             "publishedYear"=>$this->published_year
         ];
     }

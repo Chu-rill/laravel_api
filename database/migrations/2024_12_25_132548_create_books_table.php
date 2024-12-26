@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('author');
             $table->text('description')->nullable();
             $table->integer('published_year');
+            $table->boolean('borrowed')->default(false);
             $table->timestamps();
         });
     }

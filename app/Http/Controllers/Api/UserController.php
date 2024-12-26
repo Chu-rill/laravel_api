@@ -63,8 +63,12 @@ class UserController extends Controller
             'password' => 'required|string',
         ]);
 
-        $token = $this->userService->authenticate($credentials);
+        $authData = $this->userService->authenticate($credentials);
 
-        return response()->json(['message' => 'Login successful', 'token' => $token], 200);
+        return response()->json([
+            'message' => 'Login successful',
+            'token' => $authData['token'],
+            'user' => $authData['user'],
+        ], 200);
     }
 }

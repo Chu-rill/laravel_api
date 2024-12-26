@@ -8,10 +8,15 @@ class Book extends Model
 {
     protected $table = 'books';
 
+    protected $casts = [
+        'borrowed' => 'boolean'
+    ];
+
     protected $fillable = [
         'title',
         'author',
         'description',
+        "borrowed",
         'published_year'
     ];
 }

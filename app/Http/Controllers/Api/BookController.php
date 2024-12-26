@@ -62,6 +62,7 @@ class BookController extends Controller
         $validatedData = $request->validate([
             'title' => 'sometimes|required',
             'author' => 'sometimes|required',
+            'borrowed'=> 'sometimes|required|boolean',
             'published_year' => 'sometimes|required|integer',
         ]);
 
@@ -71,7 +72,10 @@ class BookController extends Controller
             return response()->json(['message' => 'Book not found'], 404);
         }
 
-        return response()->json($book);
+        return response()->json([
+            "message"=>"Book Updated",
+            "data"=> new BookResource($book)
+        ], 200);
     }
 
     // Delete a book

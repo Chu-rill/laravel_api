@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\UserResource;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -24,7 +25,7 @@ class UserService
      */
     public function register(array $data)
     {
-        Log::info('Registering user with data', ['data' => $data]);
+        // Log::info('Registering user with data', ['data' => $data]);
         return $this->userRepository->create($data);
     }
 
@@ -35,7 +36,7 @@ class UserService
      * @return string
      * @throws ValidationException
      */
-    public function authenticate(array $credentials): string
+    public function authenticate(array $credentials): array
     {
         if (!Auth::attempt($credentials)) {
             throw ValidationException::withMessages([
@@ -44,7 +45,11 @@ class UserService
         }
 
         $user = Auth::user();
-        return $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('auth_token')->plainTextToken;
+        return [
+            'token' => $token,
+            'user' => new UserResource($user),
+        ];
 
         
     }
