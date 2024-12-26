@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BookController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,6 @@ Route::group(['prefix' => 'v1'], function () {
     Route::delete('/books/{id}', [BookController::class, 'destroy']);
 
     // Auth routes
-    // Route::post('/register', [UserController::class, 'register']);
-    // Route::post('/login', [UserController::class, 'login']);
+    Route::post('/register', [UserController::class, 'register']);
+    Route::post('/login', [UserController::class, 'login']);
 });
