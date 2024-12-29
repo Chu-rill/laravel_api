@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Reservation;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ReservationRepository {
     protected $model;
@@ -35,6 +37,7 @@ class ReservationRepository {
          $book = $this->findById($id);
  
          if ($book) {
+          
              $book->update($data);
              return $book;
          }

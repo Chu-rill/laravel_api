@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Book extends Model
 {
     protected $table = 'books';
 
     protected $casts = [
+        'id' => 'string',
         'borrowed' => 'boolean'
     ];
 
@@ -19,4 +21,12 @@ class Book extends Model
         "borrowed",
         'published_year'
     ];
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+                $model->id = (string) Str::uuid();
+        });
+    }
 }

@@ -5,51 +5,51 @@ namespace App\Services;
 use App\Repositories\ReservationRepository;
 
 class ReservationService{
-    protected $ReservationRepository;
+    protected $reservationRepository;
 
-    public function __construct(ReservationRepository $ReservationRepository)
+    public function __construct(ReservationRepository $reservationRepository)
     {
-        $this->ReservationRepository = $ReservationRepository;
+        $this->reservationRepository = $reservationRepository;
     }
      // Get all reservations
      public function getAllReservations()
      {
-         return $this->ReservationRepository->getAll();
+         return $this->reservationRepository->getAll();
      }
  
      // Get a single reservation by ID
      public function getReservationById($id)
      {
-         return $this->ReservationRepository->findById($id);
+         return $this->reservationRepository->findById($id);
      }
  
      // Create a new reservation
-     public function createRservation(array $data)
+     public function createReservation(array $data)
      {
-         return $this->ReservationRepository->create($data);
+         return $this->reservationRepository->create($data);
      }
  
      // Update an existing reservation
-     public function updateRservation($id, array $data)
+     public function updateReservation($id, array $data)
      {
-         $book = $this->ReservationRepository->findById($id);
+         $book = $this->reservationRepository->findById($id);
  
          if (!$book) {
              return null;
          }
  
-         return $this->ReservationRepository->update($id, $data);
+         return $this->reservationRepository->update($id, $data);
      }
  
      // Delete a reservation
-     public function deleteRservation($id)
+     public function deleteReservation($id)
      {
-         $book = $this->ReservationRepository->findById($id);
+         $book = $this->reservationRepository->findById($id);
  
          if (!$book) {
              return false;
          }
  
-         return $this->ReservationRepository->delete($id);
+         return $this->reservationRepository->delete($id);
      }
 }
