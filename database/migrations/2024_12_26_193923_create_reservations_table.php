@@ -42,6 +42,13 @@ return new class extends Migration
 
             // Timestamps
             $table->timestamps();
+
+            // Soft deletes
+            $table->softDeletes();
+
+            // Indexes
+            $table->index('user_id');
+            $table->index('book_id');
         });
     }
 
