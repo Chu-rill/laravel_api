@@ -16,11 +16,11 @@ class ReservationResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            "id"=> $this->id,
+            "id"=> (string) $this->id,
             "user_id"=> $this->user_id,
             "book_id"=>$this->book_id,
-            "reserved_at"=> $this->reserved_at,
-            "due_date"=>$this->due_date,
+            "reserved_at" => $this->reserved_at->toISOString(),  // Ensure consistent format
+            "due_date" => $this->due_date->toISOString(),
             "status"=>$this->status
         ];
     }

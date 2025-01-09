@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Reservation extends Model
 {
     use HasFactory; 
+
+    protected $attributes = [
+        'status' => 'pending',
+    ];
     protected $casts = [
         'reserved_at' => 'datetime',
         'due_date' => 'datetime',
@@ -31,10 +35,10 @@ class Reservation extends Model
         parent::boot();
 
         // Automatically generate UUID for the id field
-        static::creating(function ($model) {
-            if (empty($model->id)) {
-                $model->id = Str::uuid()->toString();
-            }
-        });
+        // static::creating(function ($model) {
+        //     if (empty($model->id)) {
+        //         $model->id = Str::uuid()->toString();
+        //     }
+        // });
     }
 }

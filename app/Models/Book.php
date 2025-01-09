@@ -27,8 +27,8 @@ class Book extends Model
     {
         parent::boot();
 
-        static::creating(function ($model) {
-                $model->id = (string) Str::uuid();
-        });
+        // static::creating(function ($model) {
+        //         $model->id = (string) Str::uuid();
+        // });
     }
 }
