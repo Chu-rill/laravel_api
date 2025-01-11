@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -11,33 +12,42 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Users Table
-        Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id'); // Use auto-incrementing big integer as the primary key
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+        Schema::create('reservations', function (Blueprint $table) {
+            // Use bigIncrements for id
+            $table->bigIncrements('id'); // Changed from UUID to bigIncrements
+
+            // Define user_id as unsignedBigInteger with foreign key constraints
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+            // Define book_id as unsignedBigInteger with foreign key constraints
+            $table->unsignedBigInteger('book_id');
+            $table->foreign('book_id')
+                ->references('id')
+                ->on('books')
+                ->onDelete('cascade');
+
+            // Reserved at timestamp
+            $table->dateTime('reserved_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+
+            // Due date
+            $table->dateTime('due_date');
+
+            // Reservation status with default value
+            $table->enum('status', ['pending', 'active', 'completed', 'cancelled'])
+                ->default('pending');
+
+            // Timestamps
             $table->timestamps();
-        });
 
-        // Password Reset Tokens Table
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->index(); // Index for email (no primary key here)
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
+            // Soft deletes
+            $table->softDeletes();
 
-        // Sessions Table
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary(); // Session ID remains as primary key
-            $table->unsignedBigInteger('user_id')->nullable()->index(); // Foreign key referencing users table
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
+            // Indexes
+            $table->index(['user_id', 'book_id']); // Combined index for better performance
         });
     }
 
@@ -46,8 +56,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sessions');
-        Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('reservations');
     }
 };
