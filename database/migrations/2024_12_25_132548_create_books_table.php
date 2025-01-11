@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('books', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->bigIncrements('id'); // Change from uuid to bigIncrements
             $table->string('title');
             $table->string('author');
             $table->text('description')->nullable();

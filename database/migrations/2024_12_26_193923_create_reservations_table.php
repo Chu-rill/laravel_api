@@ -13,18 +13,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reservations', function (Blueprint $table) {
-            // Define the primary key as a UUID
-            $table->uuid('id')->primary();
+            // Use bigIncrements for id
+            $table->bigIncrements('id'); // Changed from UUID to bigIncrements
 
-            // Define user_id as a UUID with foreign key constraints
-            $table->uuid('user_id');
+            // Define user_id as unsignedBigInteger with foreign key constraints
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
 
-            // Define book_id as a UUID with foreign key constraints
-            $table->uuid('book_id');
+            // Define book_id as unsignedBigInteger with foreign key constraints
+            $table->unsignedBigInteger('book_id');
             $table->foreign('book_id')
                 ->references('id')
                 ->on('books')
@@ -47,8 +47,7 @@ return new class extends Migration
             $table->softDeletes();
 
             // Indexes
-            $table->index('user_id');
-            $table->index('book_id');
+            $table->index(['user_id', 'book_id']); // Combined index for better performance
         });
     }
 
