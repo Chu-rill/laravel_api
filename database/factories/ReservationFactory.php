@@ -14,7 +14,8 @@ class ReservationFactory extends Factory
         return [
             'user_id' => \App\Models\User::factory(),
             'book_id' => \App\Models\Book::factory(),
-            'reservation_date' => $this->faker->date,
+            'reserved_at' => $this->faker->date,
+            'due_date' => now()->addWeek(), 
         ];
     }
 }

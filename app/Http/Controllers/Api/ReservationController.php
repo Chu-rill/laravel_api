@@ -92,6 +92,6 @@ class ReservationController extends Controller
                 return response()->json(['message' => 'Reservation not found'], 404);
             }
     
-            return response()->json(['message' => 'Reservation deleted successfully']);
+            return response()->json(['message' => 'Reservation deleted successfully'],200);
         }
 }
